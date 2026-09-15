@@ -1,27 +1,40 @@
 package br.edu.nassau.apicursos.model;
 
+import jakarta.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "cursos")
 public class Curso {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
     private Integer cargaHoraria;
 
+    // Construtor padrão obrigatório para o JPA / Hibernate
     public Curso() {
     }
 
+    // Construtor completo
     public Curso(Long id, String nome, Integer cargaHoraria) {
         this.id = id;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
     }
 
+    // Construtor de conveniência para cadastro (sem id pré-definido)
     public Curso(String nome, Integer cargaHoraria) {
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
     }
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }

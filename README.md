@@ -241,3 +241,142 @@ Cliente -> Controller -> Service -> Repository -> Dados
 - **Conformidade:** Nenhuma regra de negócio reside no `Controller` ou no `Repository`.
 
 ---
+
+## Aula 05 — Spring Data JPA e PostgreSQL
+
+### Atividade 13 — Banco de Dados e Configuração da Conexão
+1. **Dependências Configuradas no `pom.xml`:**
+   - `spring-boot-starter-data-jpa`: Habilita o framework Hibernate/JPA e a infraestrutura de repositórios do Spring Data.
+   - `postgresql`: Driver JDBC para comunicação nativa com o SGBD PostgreSQL.
+   - `h2` (escopo de teste): Prover banco em memória isolado para suíte de testes automatizados sem impactar o banco de produção.
+
+2. **Criação do Banco de Dados no PostgreSQL:**
+   ```sql
+   CREATE DATABASE api_cursos;
+   ```
+
+3. **Configuração do `src/main/resources/application.properties`:**
+   ```properties
+   spring.application.name=api-cursos
+   server.port=8080
+
+   spring.datasource.url=jdbc:postgresql://localhost:5432/api_cursos
+   spring.datasource.username=postgres
+   spring.datasource.password=postgres
+   spring.jpa.hibernate.ddl-auto=update
+   spring.jpa.show-sql=true
+   spring.jpa.properties.hibernate.format_sql=true
+   ```
+
+---
+
+### Atividade 14 — Entity e JpaRepository
+
+1. **Entidade JPA (`Curso.java`):**
+   - Mapeada com `@Entity` e vinculada à tabela `cursos` com `@Table(name = "cursos")`.
+   - Identificador gerado automaticamente com `@Id` e estratégia nativa de auto-incremento do PostgreSQL:
+     ```java
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     private Long id;
+     ```
+   - Campos `nome` e `cargaHoraria` definidos como não-nulos (`@Column(nullable = false)`).
+
+2. **Interface `CursoRepository`:**
+   - O repositório em memória foi substituído pela interface que estende `JpaRepository`:
+     ```java
+     @Repository
+     public interface CursoRepository extends JpaRepository<Curso, Long> {
+     }
+     ```
+
+3. **Adaptação do `CursoService`:**
+   - O armazenamento anterior em `List<Curso>` foi totalmente extinto.
+   - O CRUD passou a operar diretamente através dos métodos do Spring Data JPA:
+     - `listar()` -> `cursoRepository.findAll()`
+     - `buscarPorId(id)` -> `cursoRepository.findById(id)`
+     - `cadastrar(curso)` -> `cursoRepository.save(curso)` com `curso.setId(null)`
+     - `atualizar(id, curso)` -> `cursoRepository.findById(id)` seguido de `cursoRepository.save(cursoExistente)`
+     - `remover(id)` -> `cursoRepository.deleteById(id)`
+
+---
+
+### Atividade 15 — Comprovação da Persistência
+
+Foi executado o roteiro estrito de comprovação da persistência relacional:
+1. A aplicação foi iniciada com conexão ativa ao PostgreSQL 16 na porta `5432`.
+2. Foram cadastrados 3 cursos via `POST /cursos`.
+3. Os registros foram validados via `GET /cursos`.
+4. Os dados foram consultados diretamente no banco de dados com `psql -d api_cursos -c "SELECT * FROM cursos;"`.
+5. A aplicação Spring Boot foi encerrada (`Stop-Process`), liberando a porta `8080`.
+6. A aplicação foi reiniciada a partir do zero (`.\mvnw.cmd spring-boot:run`).
+7. Uma nova consulta `GET /cursos` foi efetuada, comprovando que **todos os cursos cadastrados antes do reinício continuam perfeitamente disponíveis**.
+
+O relatório completo detalhado encontra-se no arquivo [`testes/evidencias_persistencia.md`](testes/evidencias_persistencia.md).
+
+---
+
+## Como Executar o Projeto
+
+### Pré-requisitos
+- **Java 21 LTS**
+- **PostgreSQL** em execução na porta `5432` com banco `api_cursos` (ou Docker)
+
+### Opção 1: Subir o PostgreSQL via Docker
+Na raiz do projeto, execute:
+```bash
+docker compose up -d
+```
+
+### Opção 2: Usar PostgreSQL já instalado localmente
+Certifique-se de que o serviço do PostgreSQL está ativo e execute no `psql`:
+```sql
+CREATE DATABASE api_cursos;
+```
+*(Caso a senha do usuário `postgres` seja diferente de `postgres`, atualize a propriedade `spring.datasource.password` em `src/main/resources/application.properties`).*
+
+### Executar a Aplicação Spring Boot
+Na raiz do projeto, execute com o Maven Wrapper:
+```bash
+# Windows
+.\mvnw.cmd spring-boot:run
+
+# Linux / macOS
+./mvnw spring-boot:run
+```
+A API estará acessível em: `http://localhost:8080/cursos`
+
+### Executar os Testes Automatizados
+```bash
+# Windows
+.\mvnw.cmd test
+
+# Linux / macOS
+./mvnw test
+```
+
+---
+
+## Entrega do Projeto
+
+1. **Repositório Git e Arquivo Compactado:** Histórico de commits sequenciais cobrindo as 5 aulas e arquivo `api-cursos-projeto-completo.zip` gerado na raiz.
+2. **`README.md` Completo:** Detalhamento do fluxo cliente-servidor, responsabilidades do back-end, estrutura de pacotes, contrato da API e comprovação de persistência.
+3. **Coleção de Testes:**
+   - [`testes/api-cursos.postman_collection.json`](testes/api-cursos.postman_collection.json) para importação no Postman ou Insomnia.
+   - [`testes/requisicoes.http`](testes/requisicoes.http) para testes diretos via VS Code REST Client.
+4. **Evidências de Persistência:**
+   - Arquivo [`testes/evidencias_persistencia.md`](testes/evidencias_persistencia.md) contendo os logs e saídas de comandos.
+
+---
+
+## Checklist Final
+
+- [x] Existem exatamente cinco endpoints principais de CRUD.
+- [x] O Controller trata apenas questões HTTP.
+- [x] O Service contém as regras de negócio.
+- [x] O Repository realiza o acesso aos dados.
+- [x] Curso está anotado como entidade JPA.
+- [x] O projeto usa PostgreSQL.
+- [x] Os status HTTP estão adequados às operações.
+- [x] Os testes foram documentados.
+- [x] Os dados permanecem depois do reinício.

@@ -13,7 +13,7 @@ public class CursoService {
 
     private final CursoRepository cursoRepository;
 
-    // Injeção de dependência do Repository pelo construtor
+    // Injeção de dependência do Spring Data JPA Repository pelo construtor
     public CursoService(CursoRepository cursoRepository) {
         this.cursoRepository = cursoRepository;
     }
@@ -22,33 +22,42 @@ public class CursoService {
         return "Servico de cursos ativo! Mensagem produzida pelo CursoService e gerenciada pelo Spring.";
     }
 
+    // Operação 1: Listar todos os cursos via findAll()
     public List<Curso> listar() {
-        return cursoRepository.listar();
+        return cursoRepository.findAll();
     }
 
+    // Operação 2: Buscar um curso pelo ID via findById()
     public Optional<Curso> buscarPorId(Long id) {
-        return cursoRepository.buscarPorId(id);
+        return cursoRepository.findById(id);
     }
 
+    // Operação 3: Cadastrar um novo curso via save() com ID gerado pelo banco
     public Curso cadastrar(Curso curso) {
         validarRegrasCurso(curso);
-        // Garante que o identificador seja gerado automaticamente
+        // Garante que o identificador seja gerado automaticamente pelo banco (IDENTITY)
         curso.setId(null);
-        return cursoRepository.salvar(curso);
+        return cursoRepository.save(curso);
     }
 
+    // Operação 4: Atualizar um curso existente via save()
     public Optional<Curso> atualizar(Long id, Curso cursoAtualizado) {
         validarRegrasCurso(cursoAtualizado);
 
-        return cursoRepository.buscarPorId(id).map(cursoExistente -> {
+        return cursoRepository.findById(id).map(cursoExistente -> {
             cursoExistente.setNome(cursoAtualizado.getNome());
             cursoExistente.setCargaHoraria(cursoAtualizado.getCargaHoraria());
-            return cursoRepository.salvar(cursoExistente);
+            return cursoRepository.save(cursoExistente);
         });
     }
 
+    // Operação 5: Remover um curso via deleteById()
     public boolean remover(Long id) {
-        return cursoRepository.remover(id);
+        if (cursoRepository.existsById(id)) {
+            cursoRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     // Validação estrita das regras de negócio exigidas na atividade
