@@ -1,0 +1,82 @@
+### Variáveis globais do ambiente
+@baseUrl = http://localhost:8080/cursos
+
+### 1. Endpoint temporário da Aula 02 - Mensagem do Service
+GET {{baseUrl}}/mensagem
+Accept: text/plain
+
+### 2. Listar todos os cursos (inicialmente vazio ou com cursos existentes)
+GET {{baseUrl}}
+Accept: application/json
+
+### 3. Cadastrar primeiro curso - Back-End Frameworks (201 Created)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "nome": "Back-End Frameworks",
+  "cargaHoraria": 60
+}
+
+### 4. Cadastrar segundo curso - Banco de Dados PostgreSQL (201 Created)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "nome": "Banco de Dados PostgreSQL",
+  "cargaHoraria": 40
+}
+
+### 5. Cadastrar curso com dados inválidos - Nome vazio (Regra do Service)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "nome": "",
+  "cargaHoraria": 40
+}
+
+### 6. Cadastrar curso com dados inválidos - Carga horária <= 0 (Regra do Service)
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+  "nome": "Estrutura de Dados",
+  "cargaHoraria": 0
+}
+
+### 7. Buscar curso por ID existente - ID 1 (200 OK)
+GET {{baseUrl}}/1
+Accept: application/json
+
+### 8. Buscar curso por ID inexistente - ID 999 (404 Not Found)
+GET {{baseUrl}}/999
+Accept: application/json
+
+### 9. Atualizar curso existente - ID 1 (200 OK)
+PUT {{baseUrl}}/1
+Content-Type: application/json
+
+{
+  "nome": "Back-End Frameworks Avançado",
+  "cargaHoraria": 80
+}
+
+### 10. Atualizar curso com ID inexistente - ID 999 (404 Not Found)
+PUT {{baseUrl}}/999
+Content-Type: application/json
+
+{
+  "nome": "Curso Fantasma",
+  "cargaHoraria": 20
+}
+
+### 11. Remover curso existente - ID 2 (204 No Content)
+DELETE {{baseUrl}}/2
+
+### 12. Remover curso com ID inexistente - ID 999 (404 Not Found)
+DELETE {{baseUrl}}/999
+
+### 13. Listar novamente para conferir os dados remanescentes
+GET {{baseUrl}}
+Accept: application/json

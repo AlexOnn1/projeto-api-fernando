@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "8f6a9134-45de-4d32-9b24-9b24ce8e7182",
+		"name": "API de Cursos - Atividade Prática Integrada",
+		"description": "Coleção completa com as requisições HTTP para testar a API REST de Cursos (GET, POST, PUT, DELETE, validações e casos de erro).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "01 - Mensagem do Service (Aula 02)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cursos/mensagem",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos", "mensagem"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "02 - Listar Cursos (GET /cursos)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/cursos",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "03 - Cadastrar Curso 1 (POST /cursos)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Back-End Frameworks\",\n  \"cargaHoraria\": 60\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cursos",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "04 - Cadastrar Curso 2 (POST /cursos)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Banco de Dados PostgreSQL\",\n  \"cargaHoraria\": 40\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cursos",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "05 - Cadastrar Inválido - Nome em Branco (POST 400)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"\",\n  \"cargaHoraria\": 40\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cursos",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "06 - Cadastrar Inválido - Carga Horária <= 0 (POST 400)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"DevOps com Docker\",\n  \"cargaHoraria\": 0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cursos",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "07 - Buscar Curso por ID (GET /cursos/1)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cursos/1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos", "1"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "08 - Buscar Curso por ID Inexistente (GET /cursos/999)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cursos/999",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos", "999"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "09 - Atualizar Curso (PUT /cursos/1)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Back-End Frameworks Avançado\",\n  \"cargaHoraria\": 80\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cursos/1",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos", "1"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 - Atualizar Curso Inexistente (PUT /cursos/999)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"Curso Inexistente\",\n  \"cargaHoraria\": 40\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cursos/999",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos", "999"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11 - Remover Curso Existente (DELETE /cursos/2)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cursos/2",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos", "2"]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12 - Remover Curso Inexistente (DELETE /cursos/999)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cursos/999",
+					"protocol": "http",
+					"host": ["localhost"],
+					"port": "8080",
+					"path": ["cursos", "999"]
+				}
+			},
+			"response": []
+		}
+	]
+}

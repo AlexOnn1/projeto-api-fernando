@@ -141,3 +141,47 @@ Para demonstrar os conceitos de **Inversão de Controle (IoC)** e **Injeção de
      ```
 
 ---
+
+## Aula 03 — HTTP e APIs REST
+
+### Atividade 07 — Model e Conversão JSON
+Foi implementada a classe de domínio `Curso` contendo os atributos essenciais:
+- `private Long id;`
+- `private String nome;`
+- `private Integer cargaHoraria;`
+- Construtor padrão (sem argumentos), construtores parametrizados, getters e setters.
+- Integração com a anotação `@RequestBody` no método de cadastro do `CursoController`, permitindo que o Jackson (conversor JSON padrão do Spring) desserialize a carga útil HTTP em uma instância Java e serialize a resposta Java de volta para formato JSON.
+
+---
+
+### Atividade 08 — CRUD em Memória
+Para viabilizar as operações da API antes da integração com banco de dados, foi implementado o armazenamento em memória na camada de serviço (`CursoService`) utilizando `List<Curso>` com controle sequencial de chaves primárias via `AtomicLong`:
+1. **Cadastrar (`POST /cursos`):** Atribui o próximo ID gerado em sequência, insere na lista e retorna o curso criado com status `201 Created`.
+2. **Listar (`GET /cursos`):** Retorna uma cópia da lista com todos os cursos e status `200 OK`.
+3. **Buscar por ID (`GET /cursos/{id}`):** Filtra a lista pelo ID. Retorna `200 OK` caso exista ou `404 Not Found` caso inexistente.
+4. **Atualizar (`PUT /cursos/{id}`):** Localiza o curso correspondente, atualiza `nome` e `cargaHoraria`, devolvendo `200 OK`, ou `404 Not Found` se o curso não existir.
+5. **Remover (`DELETE /cursos/{id}`):** Exclui o curso pelo ID, retornando `204 No Content` caso encontrado e removido, ou `404 Not Found` caso contrário.
+
+---
+
+### Atividade 09 — Testes HTTP e Validação de Endpoints
+
+Os testes de requisição e resposta foram estruturados em dois formatos práticos prontos para uso:
+1. **Coleção Postman / Insomnia:** Disponível no arquivo `testes/api-cursos.postman_collection.json` (basta importar diretamente no Postman ou Insomnia).
+2. **Arquivo de Requisições HTTP:** Disponível no arquivo `testes/requisicoes.http` (compatível com a extensão REST Client do VS Code e IntelliJ IDEA).
+
+#### Matriz de Evidências dos Testes HTTP:
+
+| Operação | Método | URL | Body Enviado | Resposta Obtida | Status HTTP |
+|---|---|---|---|---|---|
+| Listar cursos (início) | `GET` | `/cursos` | *Nenhum* | `[]` | `200 OK` |
+| Cadastrar curso 1 | `POST` | `/cursos` | `{"nome": "Back-End Frameworks", "cargaHoraria": 60}` | `{"id": 1, "nome": "Back-End Frameworks", "cargaHoraria": 60}` | `201 Created` |
+| Cadastrar curso 2 | `POST` | `/cursos` | `{"nome": "Banco de Dados PostgreSQL", "cargaHoraria": 40}` | `{"id": 2, "nome": "Banco de Dados PostgreSQL", "cargaHoraria": 40}` | `201 Created` |
+| Buscar curso por ID | `GET` | `/cursos/1` | *Nenhum* | `{"id": 1, "nome": "Back-End Frameworks", "cargaHoraria": 60}` | `200 OK` |
+| Buscar ID inexistente | `GET` | `/cursos/999` | *Nenhum* | *Corpo vazio* | `404 Not Found` |
+| Atualizar curso | `PUT` | `/cursos/1` | `{"nome": "Back-End Frameworks Avançado", "cargaHoraria": 80}` | `{"id": 1, "nome": "Back-End Frameworks Avançado", "cargaHoraria": 80}` | `200 OK` |
+| Atualizar ID inexistente | `PUT` | `/cursos/999` | `{"nome": "Fantasma", "cargaHoraria": 10}` | *Corpo vazio* | `404 Not Found` |
+| Remover curso | `DELETE` | `/cursos/2` | *Nenhum* | *Sem corpo* | `204 No Content` |
+| Remover ID inexistente | `DELETE` | `/cursos/999` | *Nenhum* | *Corpo vazio* | `404 Not Found` |
+
+---
