@@ -67,3 +67,77 @@ A API disponibiliza cinco endpoints principais para atender ao CRUD completo do 
 ```
 
 ---
+
+## Aula 02 — Criação da Aplicação Spring Boot
+
+### Atividade 04 — Criação e Inicialização do Projeto
+O projeto foi estruturado com as seguintes especificações recomendadas:
+- **Ferramenta de Build:** Maven com Maven Wrapper (`mvnw` e `mvnw.cmd`)
+- **Linguagem:** Java 21 LTS
+- **Empacotamento:** JAR
+- **Dependência Principal:** Spring Web (`spring-boot-starter-web`)
+- **Group ID:** `br.edu.nassau`
+- **Artifact ID:** `api-cursos`
+- **Classe Principal:** `br.edu.nassau.apicursos.ApiCursosApplication`
+
+---
+
+### Atividade 05 — Estrutura e Configuração do Projeto
+
+Abaixo está a descrição e a finalidade de cada item estrutural do projeto:
+
+1. **`pom.xml` (Project Object Model):**
+   - É o arquivo central de configuração do Maven.
+   - Declara as informações do projeto (Group ID, Artifact ID, versão), herança do Spring Boot Starter Parent, versão do Java (`21`), gerenciamento de dependências (`spring-boot-starter-web`, `spring-boot-starter-test`) e plugins de compilação e empacotamento (`spring-boot-maven-plugin`).
+
+2. **`src/main/java`:**
+   - Diretório raiz onde reside todo o código-fonte Java da aplicação.
+   - Abriga a árvore de pacotes (`br.edu.nassau.apicursos`) e todas as classes que formam a lógica de negócio, controladores, serviços, modelos e repositórios.
+
+3. **`src/main/resources`:**
+   - Diretório destinado aos arquivos de configuração estáticos e recursos não compilados da aplicação.
+   - Contém arquivos de propriedades de configuração (`application.properties`), templates, schemas de banco ou arquivos de inicialização (`schema.sql`, `data.sql`).
+
+4. **Classe com `@SpringBootApplication` (`ApiCursosApplication.java`):**
+   - É o ponto de entrada (*entry point*) da aplicação.
+   - A anotação `@SpringBootApplication` combina três recursos essenciais do Spring:
+     - `@Configuration`: Marca a classe como fonte de definições de beans.
+     - `@EnableAutoConfiguration`: Habilita o mecanismo de autoconfiguração inteligente do Spring Boot.
+     - `@ComponentScan`: Escaneia automaticamente o pacote atual e seus subpacotes em busca de componentes gerenciados (`@Component`, `@Service`, `@RestController`, `@Repository`).
+   - Contém o método `public static void main(String[] args)` que invoca `SpringApplication.run(ApiCursosApplication.class, args)`.
+
+5. **`application.properties`:**
+   - Arquivo de propriedades em chave-valor utilizado para parametrizar o comportamento da aplicação em tempo de execução.
+   - Configurado especificamente para esta atividade com:
+     ```properties
+     spring.application.name=api-cursos
+     server.port=8080
+     ```
+   - Garante que a aplicação se identifique como `api-cursos` e que o servidor web embutido (Tomcat) atenda na porta `8080`.
+
+---
+
+### Atividade 06 — Beans e Injeção de Dependência
+
+Para demonstrar os conceitos de **Inversão de Controle (IoC)** e **Injeção de Dependência (DI)** do Spring Framework:
+
+1. **`CursoService`:**
+   - Anotado com `@Service`, tornando-o um componente Spring (Bean) gerenciado no ApplicationContext.
+   - Implementa o método `obterMensagem()`, responsável por produzir o conteúdo textual da resposta.
+2. **`CursoController`:**
+   - Anotado com `@RestController` e mapeado na rota base `@RequestMapping("/cursos")`.
+   - **Injeção pelo Construtor:** Recebe a instância gerenciada de `CursoService` diretamente em seu construtor público:
+     ```java
+     public CursoController(CursoService cursoService) {
+         this.cursoService = cursoService;
+     }
+     ```
+   - **Regra Atendida:** O controller **jamais** instancia o serviço com operador `new CursoService()`, delegando integralmente o ciclo de vida ao container IoC do Spring.
+3. **Endpoint Temporário:**
+   - `GET /cursos/mensagem`: Retorna a mensagem gerada dinamicamente pelo `CursoService`.
+   - Exemplo de resposta HTTP (Status `200 OK`):
+     ```
+     Servico de cursos ativo! Mensagem produzida pelo CursoService e gerenciada pelo Spring.
+     ```
+
+---
