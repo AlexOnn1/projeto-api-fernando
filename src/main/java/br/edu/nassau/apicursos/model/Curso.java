@@ -1,4 +1,4 @@
-package br.edu.nassau.apicursos;
+package br.edu.nassau.apicursos.model;
 
 import java.util.Objects;
 
@@ -8,24 +8,20 @@ public class Curso {
     private String nome;
     private Integer cargaHoraria;
 
-    // Construtor padrão (vazio) necessário para serialização/desserialização JSON
     public Curso() {
     }
 
-    // Construtor completo
     public Curso(Long id, String nome, Integer cargaHoraria) {
         this.id = id;
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
     }
 
-    // Construtor auxiliar sem ID (usado no cadastro via requisição)
     public Curso(String nome, Integer cargaHoraria) {
         this.nome = nome;
         this.cargaHoraria = cargaHoraria;
     }
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

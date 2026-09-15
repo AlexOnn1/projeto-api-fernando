@@ -185,3 +185,59 @@ Os testes de requisição e resposta foram estruturados em dois formatos prátic
 | Remover ID inexistente | `DELETE` | `/cursos/999` | *Nenhum* | *Corpo vazio* | `404 Not Found` |
 
 ---
+
+## Aula 04 — Arquitetura em Camadas
+
+### Atividade 10 — Organização dos Pacotes
+Para garantir uma separação limpa de responsabilidades e atender às boas práticas de engenharia de software e padrões corporativos, o projeto foi reorganizado nos seguintes pacotes:
+
+```
+br.edu.nassau.apicursos
+├── controller
+│   └── CursoController.java
+├── service
+│   └── CursoService.java
+├── repository
+│   └── CursoRepository.java
+├── model
+│   └── Curso.java
+└── exception
+    ├── RegraNegocioException.java
+    └── GlobalExceptionHandler.java
+```
+
+- **`model`:** Contém as entidades e modelos de dados do domínio do negócio (`Curso`).
+- **`repository`:** Camada de acesso, persistência e manipulação dos dados (`CursoRepository`).
+- **`service`:** Camada central de regras de negócio, validações e orquestração de chamadas (`CursoService`).
+- **`controller`:** Camada de apresentação REST que gerencia exclusivamente o protocolo HTTP (`CursoController`).
+- **`exception`:** Tratamento centralizado de erros de validação e regras de negócio com `@RestControllerAdvice`.
+
+---
+
+### Atividade 11 — Repository em Memória
+Foi criada a classe `CursoRepository` com a anotação `@Repository`.
+- **Isolamento de Responsabilidade:** A `List<Curso>` e o controle de geração sequencial de IDs (`sequenceId`) foram removidos do `CursoService` e encapsulados no repositório.
+- **Injeção de Dependência:** O `CursoRepository` é injetado no `CursoService` via construtor.
+- **Princípio da Responsabilidade Única (SRP):**
+  - O `CursoService` desconhece os detalhes de armazenamento interno (não gerencia mais listas nem IDs).
+  - O `CursoController` desconhece completamente o `CursoRepository`, comunicando-se exclusivamente com a camada de serviço.
+
+---
+
+### Atividade 12 — Regras de Negócio no Service
+
+O `CursoService` concentra todas as validações de domínio antes de delegar as chamadas ao repositório:
+1. **Nome Obrigatório:** O campo `nome` não pode ser nulo nem conter apenas espaços em branco (`trim().isEmpty()`).
+2. **Carga Horária Positiva:** O campo `cargaHoraria` deve ser estritamente maior que zero (`cargaHoraria > 0`).
+
+#### Fluxo Unidirecional da Aplicação:
+```
+Cliente -> Controller -> Service -> Repository -> Dados
+```
+
+- **Papel do Controller:** Recebe os dados HTTP da requisição (`@RequestBody`, `@PathVariable`), repassa os dados ao `CursoService` e converte o resultado nos códigos de status HTTP correspondentes (`200 OK`, `201 Created`, `204 No Content`, `404 Not Found`).
+- **Papel do Service:** Executa e fiscaliza as regras de negócio (`validarRegrasCurso`). Se houver inconsistência, lança `RegraNegocioException`, capturada pelo `GlobalExceptionHandler` e convertida em resposta HTTP `400 Bad Request`.
+- **Papel do Repository:** Realiza as operações de leitura e escrita sobre a coleção de dados.
+- **Conformidade:** Nenhuma regra de negócio reside no `Controller` ou no `Repository`.
+
+---

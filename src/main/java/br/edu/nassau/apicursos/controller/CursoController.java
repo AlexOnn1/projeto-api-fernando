@@ -1,5 +1,7 @@
-package br.edu.nassau.apicursos;
+package br.edu.nassau.apicursos.controller;
 
+import br.edu.nassau.apicursos.model.Curso;
+import br.edu.nassau.apicursos.service.CursoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +12,9 @@ import java.util.List;
 @RequestMapping("/cursos")
 public class CursoController {
 
+    // O Controller conhece e se comunica exclusivamente com o CursoService
     private final CursoService cursoService;
 
-    // Injeção de dependência via construtor
     public CursoController(CursoService cursoService) {
         this.cursoService = cursoService;
     }
@@ -28,7 +30,7 @@ public class CursoController {
         return ResponseEntity.ok(cursoService.listar());
     }
 
-    // 2. Buscar um curso pelo ID - GET /cursos/{id} (200 OK ou 404 Not Found)
+    // 2. Buscar curso pelo ID - GET /cursos/{id} (200 OK ou 404 Not Found)
     @GetMapping("/{id}")
     public ResponseEntity<Curso> buscarPorId(@PathVariable Long id) {
         return cursoService.buscarPorId(id)
@@ -36,14 +38,14 @@ public class CursoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 3. Cadastrar um curso - POST /cursos (201 Created)
+    // 3. Cadastrar curso - POST /cursos (201 Created)
     @PostMapping
     public ResponseEntity<Curso> cadastrar(@RequestBody Curso curso) {
         Curso novoCurso = cursoService.cadastrar(curso);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoCurso);
     }
 
-    // 4. Atualizar um curso - PUT /cursos/{id} (200 OK ou 404 Not Found)
+    // 4. Atualizar curso - PUT /cursos/{id} (200 OK ou 404 Not Found)
     @PutMapping("/{id}")
     public ResponseEntity<Curso> atualizar(@PathVariable Long id, @RequestBody Curso curso) {
         return cursoService.atualizar(id, curso)
@@ -51,7 +53,7 @@ public class CursoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 5. Remover um curso - DELETE /cursos/{id} (204 No Content ou 404 Not Found)
+    // 5. Remover curso - DELETE /cursos/{id} (204 No Content ou 404 Not Found)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Long id) {
         boolean removido = cursoService.remover(id);
