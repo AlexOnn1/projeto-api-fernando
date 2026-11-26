@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório de Entrega — Atividade Prática Integrada (API de Cursos)</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #24292e;
+      line-height: 1.5;
+      font-size: 11pt;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      border-bottom: 3px solid #0969da;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 20pt;
+      color: #0969da;
+      margin: 0 0 6px 0;
+      font-weight: 700;
+    }
+    .header h2 {
+      font-size: 13pt;
+      color: #57606a;
+      margin: 0 0 10px 0;
+      font-weight: 500;
+    }
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 10pt;
+    }
+    .meta-table td {
+      padding: 4px 8px;
+      border: 1px solid #d0d7de;
+      background-color: #f6f8fa;
+    }
+    .meta-table td.label {
+      font-weight: 600;
+      width: 25%;
+      color: #24292e;
+      background-color: #eaeef2;
+    }
+    h3 {
+      font-size: 13pt;
+      color: #1f2328;
+      border-bottom: 1px solid #d8dee4;
+      padding-bottom: 4px;
+      margin-top: 22px;
+      margin-bottom: 10px;
+    }
+    h4 {
+      font-size: 11pt;
+      color: #0969da;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+    p, li {
+      font-size: 10.5pt;
+      color: #24292e;
+    }
+    ul, ol {
+      margin-top: 4px;
+      margin-bottom: 8px;
+      padding-left: 20px;
+    }
+    table.content-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 9.5pt;
+    }
+    table.content-table th, table.content-table td {
+      border: 1px solid #d0d7de;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    table.content-table th {
+      background-color: #f6f8fa;
+      font-weight: 600;
+      color: #24292e;
+    }
+    table.content-table tr:nth-child(even) {
+      background-color: #fafbfc;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 6px;
+      font-size: 8pt;
+      font-weight: 600;
+      border-radius: 4px;
+      color: white;
+    }
+    .badge-get { background-color: #0969da; }
+    .badge-post { background-color: #1a7f37; }
+    .badge-put { background-color: #9a6700; }
+    .badge-delete { background-color: #cf222e; }
+    pre {
+      background-color: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 9pt;
+      overflow-x: auto;
+      margin: 8px 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 9.5pt;
+      background-color: #f3f4f6;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+    .card {
+      background-color: #f6f8fa;
+      border-left: 4px solid #0969da;
+      padding: 8px 12px;
+      margin: 10px 0;
+      font-size: 10pt;
+    }
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+    .checklist li {
+      padding: 4px 0;
+      font-size: 10pt;
+    }
+    .check-box {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background-color: #1a7f37;
+      color: white;
+      text-align: center;
+      line-height: 14px;
+      font-size: 10px;
+      border-radius: 3px;
+      margin-right: 8px;
+      font-weight: bold;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>ATIVIDADE PRÁTICA INTEGRADA</h1>
+    <h2>Back-End Frameworks — Projeto: API de Cursos</h2>
+    <table class="meta-table">
+      <tr>
+        <td class="label">Aluno:</td>
+        <td>Alexsander</td>
+        <td class="label">Disciplina:</td>
+        <td>Back-End Frameworks</td>
+      </tr>
+      <tr>
+        <td class="label">Tecnologias:</td>
+        <td>Java 21 LTS, Spring Boot 3, Spring Data JPA, PostgreSQL 16</td>
+        <td class="label">Repositório GitHub:</td>
+        <td><a href="https://github.com/AlexOnn1/projeto-api-fernando" style="color: #0969da; text-decoration: none;">https://github.com/AlexOnn1/projeto-api-fernando</a></td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>1. Histórico de Commits Sequenciais (Aulas 01 a 05)</h3>
+  <p>Conforme determinação da atividade (<i>"Não crie cinco projetos diferentes. Implemente todas as etapas no mesmo projeto e faça um commit ao concluir as atividades de cada aula"</i>), o repositório foi construído de forma linear e progressiva:</p>
+
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th style="width: 15%;">Commit</th>
+        <th style="width: 20%;">Aula</th>
+        <th>Mensagem do Commit e Escopo Realizado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>df21e84</code></td>
+        <td><b>Aula 01</b></td>
+        <td><b>Aula 01: Introducao ao Back-End, fluxo cliente-servidor e contrato da API</b><br>
+        Documentação do ciclo Request/Response, responsabilidades do back-end e contrato inicial.</td>
+      </tr>
+      <tr>
+        <td><code>d13ce2c</code></td>
+        <td><b>Aula 02</b></td>
+        <td><b>Aula 02: Criacao da aplicacao Spring Boot, configuracao e injecao de dependencias</b><br>
+        Setup Maven, porta 8080 no application.properties, CursoService e CursoController com injeção de dependência.</td>
+      </tr>
+      <tr>
+        <td><code>a3783e3</code></td>
+        <td><b>Aula 03</b></td>
+        <td><b>Aula 03: Model Curso, CRUD em memoria no Service e endpoints REST com testes HTTP</b><br>
+        Classe Curso (POJO), operações CRUD em memória com List&lt;Curso&gt;, coleção Postman e arquivo .http.</td>
+      </tr>
+      <tr>
+        <td><code>515342c</code></td>
+        <td><b>Aula 04</b></td>
+        <td><b>Aula 04: Arquitetura em camadas, separacao de responsabilidades e validacao de regras no Service</b><br>
+        Pacotes controller, service, repository, model. Regras: nome obrigatório e cargaHoraria &gt; 0.</td>
+      </tr>
+      <tr>
+        <td><code>671267d</code></td>
+        <td><b>Aula 05</b></td>
+        <td><b>Aula 05: Persistencia com Spring Data JPA, PostgreSQL e comprovacao de dados</b><br>
+        Entidade JPA com @Table(name = "cursos"), JpaRepository, banco PostgreSQL e testes de persistência.</td>
+      </tr>
+      <tr>
+        <td><code>3b5df81</code></td>
+        <td><b>Final</b></td>
+        <td><b>chore: ignorar arquivo zip de distribuicao</b><br>
+        Higienização da árvore de arquivos e geração do pacote compactado final para entrega.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>2. Fluxo Cliente-Servidor e Arquitetura em Camadas</h3>
+  <div class="card">
+    <b>Fluxo Unidirecional Obrigatório:</b><br>
+    <code>Cliente -&gt; Controller -&gt; Service -&gt; Repository -&gt; Banco de Dados (PostgreSQL)</code>
+  </div>
+  <ul>
+    <li><b>Cliente:</b> Envia a requisição HTTP (Request) contendo o método (GET, POST, PUT, DELETE) e corpo JSON quando aplicável.</li>
+    <li><b>CursoController:</b> Responsável <b>apenas</b> pelo protocolo HTTP. Recebe os dados via anotações Spring (<code>@RequestBody</code>, <code>@PathVariable</code>), delega a chamada para o serviço e retorna <code>ResponseEntity</code> com o status correto. <i>O Controller não acessa o banco nem a camada de dados diretamente.</i></li>
+    <li><b>CursoService:</b> Concentra <b>exclusivamente</b> a inteligência do negócio e as validações (nome não nulo nem em branco, carga horária maior que zero). Se inválido, rejeita a operação com 400 Bad Request. Se válido, aciona o repositório.</li>
+    <li><b>CursoRepository:</b> Interface que estende <code>JpaRepository&lt;Curso, Long&gt;</code>, delegando ao Spring Data JPA a geração transparente das consultas SQL contra o banco de dados.</li>
+    <li><b>PostgreSQL:</b> SGBD relacional que assegura a persistência definitiva dos dados em disco.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <h3>3. Contrato da API REST (Endpoints Obrigatórios)</h3>
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th>Método</th>
+        <th>Endpoint</th>
+        <th>Operação</th>
+        <th>Payload Enviado (Body)</th>
+        <th>Resposta e Status HTTP</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="badge badge-get">GET</span></td>
+        <td><code>/cursos</code></td>
+        <td>Listar todos os cursos</td>
+        <td><i>Nenhum</i></td>
+        <td><code>200 OK</code> — Lista JSON com os cursos cadastrados</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-get">GET</span></td>
+        <td><code>/cursos/{id}</code></td>
+        <td>Buscar curso por ID</td>
+        <td><i>Nenhum</i></td>
+        <td><code>200 OK</code> (se encontrado) ou <code>404 Not Found</code></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-post">POST</span></td>
+        <td><code>/cursos</code></td>
+        <td>Cadastrar curso</td>
+        <td><code>{"nome": "Back-End Frameworks", "cargaHoraria": 60}</code></td>
+        <td><code>201 Created</code> — Objeto criado com ID gerado pelo banco</td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-put">PUT</span></td>
+        <td><code>/cursos/{id}</code></td>
+        <td>Atualizar curso</td>
+        <td><code>{"nome": "Back-End Avançado", "cargaHoraria": 80}</code></td>
+        <td><code>200 OK</code> (atualizado) ou <code>404 Not Found</code></td>
+      </tr>
+      <tr>
+        <td><span class="badge badge-delete">DELETE</span></td>
+        <td><code>/cursos/{id}</code></td>
+        <td>Remover curso</td>
+        <td><i>Nenhum</i></td>
+        <td><code>204 No Content</code> (removido) ou <code>404 Not Found</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>4. Configuração da Conexão com o PostgreSQL</h3>
+  <p>Configuração aplicada em <code>src/main/resources/application.properties</code>:</p>
+  <pre>spring.application.name=api-cursos
+server.port=8080
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/api_cursos
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true</pre>
+
+  <h3>5. Evidência da Persistência dos Dados (Atividade 15)</h3>
+  <p>Abaixo está o registro da execução real do teste de persistência no PostgreSQL:</p>
+
+  <h4>5.1 Cadastro de Cursos via POST /cursos</h4>
+  <pre>POST http://localhost:8080/cursos
+Content-Type: application/json
+Body: { "nome": "Back-End Frameworks", "cargaHoraria": 60 }
+Status: 201 Created -> { "id": 1, "nome": "Back-End Frameworks", "cargaHoraria": 60 }
+
+POST http://localhost:8080/cursos
+Content-Type: application/json
+Body: { "nome": "Banco de Dados PostgreSQL", "cargaHoraria": 40 }
+Status: 201 Created -> { "id": 2, "nome": "Banco de Dados PostgreSQL", "cargaHoraria": 40 }
+
+POST http://localhost:8080/cursos
+Content-Type: application/json
+Body: { "nome": "Arquitetura de Software em Camadas", "cargaHoraria": 80 }
+Status: 201 Created -> { "id": 3, "nome": "Arquitetura de Software em Camadas", "cargaHoraria": 80 }</pre>
+
+  <h4>5.2 Consulta Direta no Banco PostgreSQL (via terminal psql antes do reinício)</h4>
+  <pre>$ psql -U postgres -h localhost -p 5432 -d api_cursos -c "SELECT id, nome, carga_horaria FROM cursos ORDER BY id;"
+
+ id |                nome                | carga_horaria 
+----+------------------------------------+---------------
+  1 | Back-End Frameworks                |            60
+  2 | Banco de Dados PostgreSQL          |            40
+  3 | Arquitetura de Software em Camadas |            80
+(3 linhas)</pre>
+
+  <h4>5.3 Encerramento da Aplicação e Reinicialização</h4>
+  <pre>1. Stop-Process -Id &lt;PID&gt; -Force  --> Processo Java encerrado. Porta 8080 liberada.
+2. .\mvnw.cmd spring-boot:run     --> Aplicação reiniciada do zero na porta 8080.</pre>
+
+  <h4>5.4 Confirmação via GET /cursos Após o Reinício</h4>
+  <pre>GET http://localhost:8080/cursos
+Status: 200 OK
+Response Body:
+[
+  { "id": 1, "nome": "Back-End Frameworks", "cargaHoraria": 60 },
+  { "id": 2, "nome": "Banco de Dados PostgreSQL", "cargaHoraria": 40 },
+  { "id": 3, "nome": "Arquitetura de Software em Camadas", "cargaHoraria": 80 }
+]</pre>
+  <div class="card">
+    <b>Comprovação:</b> Todos os cursos persistiram no banco relacional PostgreSQL e retornaram normalmente na API após o reinício completo da aplicação.
+  </div>
+
+  <div class="page-break"></div>
+
+  <h3>6. Coleção de Testes e Automação</h3>
+  <ul>
+    <li><b>Coleção Postman / Insomnia:</b> Arquivo <code>testes/api-cursos.postman_collection.json</code> contendo os 12 casos de teste (GET, POST, PUT, DELETE, IDs inexistentes e validações com 400 Bad Request).</li>
+    <li><b>Arquivo de Requisições HTTP:</b> Arquivo <code>testes/requisicoes.http</code> executável no VS Code.</li>
+    <li><b>Suíte de Testes Automatizados (JUnit 5 + MockMvc):</b> 11 testes integrados cobrindo todos os cenários.
+      <pre>[INFO] Running br.edu.nassau.apicursos.ApiCursosApplicationTests
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS</pre>
+    </li>
+  </ul>
+
+  <h3>7. Checklist Final de Avaliação</h3>
+  <ul class="checklist">
+    <li><span class="check-box">&#10003;</span> <b>Existem exatamente cinco endpoints principais de CRUD:</b> GET /cursos, GET /cursos/{id}, POST /cursos, PUT /cursos/{id} e DELETE /cursos/{id}.</li>
+    <li><span class="check-box">&#10003;</span> <b>O Controller trata apenas questões HTTP:</b> Delega toda a lógica para o CursoService e devolve ResponseEntity com códigos de status HTTP corretos.</li>
+    <li><span class="check-box">&#10003;</span> <b>O Service contém as regras de negócio:</b> Validações de nome obrigatório (não nulo nem em branco) e cargaHoraria &gt; 0 antes de acionar a camada de dados.</li>
+    <li><span class="check-box">&#10003;</span> <b>O Repository realiza o acesso aos dados:</b> O Controller não conhece o Repository; a comunicação de persistência ocorre estritamente via Spring Data JPA.</li>
+    <li><span class="check-box">&#10003;</span> <b>Curso está anotado como entidade JPA:</b> Anotações @Entity, @Table(name = "cursos"), @Id e @GeneratedValue(strategy = IDENTITY).</li>
+    <li><span class="check-box">&#10003;</span> <b>O projeto usa PostgreSQL:</b> Conexão ativa com banco de dados PostgreSQL relacional (api_cursos).</li>
+    <li><span class="check-box">&#10003;</span> <b>Os status HTTP estão adequados às operações:</b> 200 OK, 201 Created, 204 No Content, 404 Not Found e 400 Bad Request.</li>
+    <li><span class="check-box">&#10003;</span> <b>Os testes foram documentados:</b> README.md, relatórios, coleção Postman e arquivo de requisições HTTP.</li>
+    <li><span class="check-box">&#10003;</span> <b>Os dados permanecem depois do reinício:</b> Persistência comprovada e demonstrada na Atividade 15.</li>
+  </ul>
+
+  <div style="margin-top: 30px; text-align: center; border-top: 1px solid #d0d7de; padding-top: 15px; font-size: 9pt; color: #57606a;">
+    Atividade Prática Integrada — Back-End Frameworks &bull; Java 21, Spring Boot 3, Spring Data JPA & PostgreSQL &bull; 2026
+  </div>
+
+</body>
+</html>
